@@ -546,8 +546,6 @@ function library:window(properties)
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 	})
 
-	--[[
-
 	local TEXT_ANIMATION_GRADIENT = library:create("UIGradient", {
 		Parent = name,
 		Name = "",
@@ -557,12 +555,7 @@ function library:window(properties)
 			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
 		}),
 	})
-
-	]]
-
-	name.TextColor3 = themes.preset.accent
-    library:apply_theme(name, "accent", "TextColor3")
-
+	
 	local UIPadding = library:create("UIPadding", {
 		Parent = tabs,
 		Name = "",
