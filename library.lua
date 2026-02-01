@@ -561,6 +561,7 @@ function library:window(properties)
 	]]
 
 	name.TextColor3 = themes.preset.accent
+    library:apply_theme(name, "accent", "TextColor3")
 
 	local UIPadding = library:create("UIPadding", {
 		Parent = tabs,
