@@ -546,6 +546,8 @@ function library:window(properties)
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 	})
 
+	--[[
+
 	local TEXT_ANIMATION_GRADIENT = library:create("UIGradient", {
 		Parent = name,
 		Name = "",
@@ -555,6 +557,10 @@ function library:window(properties)
 			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
 		}),
 	})
+
+	]]
+
+	name.TextColor3 = themes.preset.accent
 
 	local UIPadding = library:create("UIPadding", {
 		Parent = tabs,
@@ -581,6 +587,8 @@ function library:window(properties)
 
 	library:apply_theme(glow, "accent", "ImageColor3")
 
+	--[[
+
 	task.spawn(function()
 		while true do
 			if __holder.Visible then
@@ -593,6 +601,10 @@ function library:window(properties)
 		end
 	end)
 	--
+
+	]]
+
+	name.Text = cfg.name .. " | private"
 
 	-- window
 	local inline1 = library:create("Frame", {
