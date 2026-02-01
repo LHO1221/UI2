@@ -56,7 +56,7 @@ getgenv().library = {
 	keybind_path,
 	panel_open = false,
 
-	directory = "inactivity",
+	directory = "Twl's Cheat",
 	folders = {
 		"/fonts",
 		"/configs",
@@ -344,40 +344,48 @@ function library:config_list_update()
 end
 
 function library:get_config()
-	local Config = {}
+    local Config = {}
 
-	for _, v in flags do
-		if type(v) == "table" and v.key then
-			Config[_] = { active = v.active, mode = v.mode, key = v.key and tostring(v.key) or "..." }
-		elseif type(v) == "table" and v["Transparency"] and v["Color"] then
-			Config[_] = { Transparency = v["Transparency"], Color = v["Color"]:ToHex() }
-		else
-			Config[_] = v
-		end
-	end
+    for _, v in flags do
+        if type(v) == "table" and v.key then
+            Config[_] = { active = v.active, mode = v.mode, key = v.key and tostring(v.key) or "..." }
+        elseif type(v) == "table" and v["Transparency"] ~= nil and v["Color"] ~= nil then
+            local color_val = v["Color"]
+            if typeof(color_val) == "Color3" then
+                color_val = color_val:ToHex()
+            elseif type(color_val) == "string" then
+                color_val = color_val
+            else
+                color_val = "ffffff"
+            end
+            Config[_] = { Transparency = v["Transparency"], Color = color_val }
+        else
+            Config[_] = v
+        end
+    end
 
-	return http_service:JSONEncode(Config)
+    return http_service:JSONEncode(Config)
 end
 
 function library:load_config(config_json)
-	local config = http_service:JSONDecode(config_json)
+    local config = http_service:JSONDecode(config_json)
 
-	for _, v in next, config do
-		local function_set = library.config_flags[_]
+    for _, v in next, config do
+        local function_set = library.config_flags[_]
 
-		if function_set then
-			if type(v) == "table" and v["Transparency"] ~= nil and v["Color"] ~= nil then
-  			    local success, color = pcall(Color3.fromHex, v["Color"])
-                 if success then
-                     function_set(color, v["Transparency"])
-                 end
-			elseif type(v) == "table" and v["active"] then
-				function_set(v)
-			else
-				function_set(v)
-			end
-		end
-	end
+        if function_set then
+            if type(v) == "table" and v["Transparency"] ~= nil and v["Color"] ~= nil then
+                local success, color = pcall(Color3.fromHex, v["Color"])
+                if success then
+                    function_set(color, v["Transparency"])
+                end
+            elseif type(v) == "table" and v["active"] ~= nil then
+                function_set(v)
+            else
+                function_set(v)
+            end
+        end
+    end
 end
 
 function library:round(number, float)
