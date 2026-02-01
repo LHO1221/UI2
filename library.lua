@@ -328,19 +328,20 @@ function library:convert_enum(enum)
 end
 
 function library:config_list_update()
-	if not library.config_holder then
-		return
-	end
+    if not library.config_holder then
+        return
+    end
 
-	local list = {}
+    local list = {}
 
-	for idx, file in next, listfiles(library.directory .. "/configs") do
-		local name = string.split(file, "/configs/")[2]
-        name = string.split(name, ".cfg")[1]
-		list[#list + 1] = name
-	end
+    for idx, file in next, listfiles(library.directory .. "/configs") do
+        local name = string.match(file, "[/\\]([^/\\]+)%.cfg$")
+        if name then
+            list[#list + 1] = name
+        end
+    end
 
-	library.config_holder:refresh_options(list)
+    library.config_holder:refresh_options(list)
 end
 
 function library:get_config()
