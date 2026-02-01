@@ -335,8 +335,8 @@ function library:config_list_update()
 	local list = {}
 
 	for idx, file in next, listfiles(library.directory .. "/configs") do
-		local name = file.split(file, "/configs/")[2]
-		name = name.split(name, ".cfg")[1]
+		local name = string.split(file, "/configs/")[2]
+        name = string.split(name, ".cfg")[1]
 		list[#list + 1] = name
 	end
 
@@ -348,7 +348,7 @@ function library:get_config()
 
 	for _, v in flags do
 		if type(v) == "table" and v.key then
-			Config[_] = { active = v.active, mode = v.mode, key = tostring(v.key) }
+			Config[_] = { active = v.active, mode = v.mode, key = v.key and tostring(v.key) or "..." }
 		elseif type(v) == "table" and v["Transparency"] and v["Color"] then
 			Config[_] = { Transparency = v["Transparency"], Color = v["Color"]:ToHex() }
 		else
@@ -366,8 +366,11 @@ function library:load_config(config_json)
 		local function_set = library.config_flags[_]
 
 		if function_set then
-			if type(v) == "table" and v["Transparency"] and v["Color"] then
-				function_set(hex(v["Color"]), v["Transparency"])
+			if type(v) == "table" and v["Transparency"] ~= nil and v["Color"] ~= nil then
+  			    local success, color = pcall(Color3.fromHex, v["Color"])
+                 if success then
+                     function_set(color, v["Transparency"])
+                 end
 			elseif type(v) == "table" and v["active"] then
 				function_set(v)
 			else
