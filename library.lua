@@ -605,7 +605,7 @@ function library:window(properties)
 
 	]]
 
-	name.Text = cfg.name .. " | private"
+	name.Text = cfg.name
 
 	-- window
 	local inline1 = library:create("Frame", {
