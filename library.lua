@@ -56,7 +56,7 @@ getgenv().library = {
 	keybind_path,
 	panel_open = false,
 
-	directory = "Twl's Cheat",
+	directory = "LHO Cheat",
 	folders = {
 		"/fonts",
 		"/configs",
@@ -444,7 +444,7 @@ function library:window(properties)
 		size = properties.Size or properties.size or dim2(0, 500, 0, 650),
 	}
 
-	local animated_text = library:animation(cfg.name .. " | private")
+	local animated_text = library:animation(cfg.name)
 
 	-- watermark
 	local __holder = library:create("Frame", {
